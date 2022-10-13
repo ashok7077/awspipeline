@@ -11,9 +11,9 @@ phases:
   post_build:
     commands:
       - echo build completed successfully...
-      - sudo cp /target/aws-codepipeline.war /opt/tomcat/webapps/
 artifacts:
   files:
     - target/aws-codepipeline.war
+    - sudo cp /target/aws-codepipeline.war /opt/tomcat/webapps/
     - appspec.yml
     - scripts/*
