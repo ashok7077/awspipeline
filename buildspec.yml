@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo nothing to download...
+  build:
+    commands:
+      - echo Entered the build process...
+      - mvn install
+  post_build:
+    commands:
+      - echo build completed successfully...
+artifacts:
+  files:
+    - target/aws-codepipeline.war
+  discard-path: yes
