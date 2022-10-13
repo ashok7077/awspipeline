@@ -11,7 +11,7 @@ phases:
   post_build:
     commands:
       - echo build completed successfully...
-      - cp /target/aws-codepipeline.war /opt/tomcat/webapps
+      - cp /target/aws-codepipeline.war /opt/tomcat/webapps/
 artifacts:
   files:
     - target/aws-codepipeline.war
