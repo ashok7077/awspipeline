@@ -2,7 +2,7 @@
 
 set -e
 
-CATALINA_HOME=/usr/share/tomcat-codedeploy
+CATALINA_HOME=/opt/tomcat
 TOMCAT_VERSION=10.0.27
 
 # Tar file name
@@ -50,7 +50,7 @@ cat > /etc/init.d/tomcat <<'EOF'
 # processname: tomcat
 PATH=$JAVA_HOME/bin:$PATH
 export PATH
-CATALINA_HOME='/usr/share/tomcat-codedeploy'
+CATALINA_HOME='/opt/tomcat'
 
 case $1 in
 start)
