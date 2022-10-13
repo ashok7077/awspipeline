@@ -13,5 +13,6 @@ phases:
       - echo build completed successfully...
 artifacts:
   files:
-    - target/aws-codepipeline.jar
-  discard-paths: yes
+    - target/aws-codepipeline.war
+    - appspec.yml
+    - scripts/*
