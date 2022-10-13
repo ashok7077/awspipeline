@@ -19,7 +19,7 @@ TOMCAT_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
 # of Tomcat installed at the specified directory
 [[ -d $CATALINA_HOME ]] && { service tomcat status; } && {
     echo "Tomcat is already installed at $CATALINA_HOME. Skip reinstalling it."
-   # exit 0
+    exit 0
 }
 
 # Clear install directory
