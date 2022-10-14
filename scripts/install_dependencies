@@ -1,71 +1,16 @@
 #!/bin/bash
+sudo yum update -y
 
-set -e
+#1. search for PID
+script_1="tomcat"
+#2. store in a file - result
+script_1_pid=`sudo ps -eaf | grep -m1 ${script_1}`
+echo "${script_1_pid}" > /home/ec2-user/pid_1.txt
 
-CATALINA_HOME=/opt/tomcat
-TOMCAT_VERSION=10.0.27
+#3. wc lines
+tom_exists= sudo wc -l /home/ec2-user/pid_1.txt
 
-# Tar file name
-TOMCAT_CORE_TAR_FILENAME="apache-tomcat-$TOMCAT_VERSION.tar.gz"
-# Download URL for Tomcat core
-#TOMCAT_CORE_DOWNLOAD_URL="http://mirror.olnevhost.net/pub/apache/tomcat/tomcat-10/v$TOMCAT_VERSION/bin/$TOMCAT_CORE_TAR_FILENAME"
-TOMCAT_CORE_DOWNLOAD_URL="https://archive.apache.org/dist/tomcat/tomcat-10/v$TOMCAT_VERSION/bin/$TOMCAT_CORE_TAR_FILENAME"
-
-# The top-level directory after unpacking the tar file
-TOMCAT_CORE_UNPACKED_DIRNAME="apache-tomcat-$TOMCAT_VERSION"
-
-
-# Check whether there exists a valid instance
-# of Tomcat installed at the specified directory
-[[ -d $CATALINA_HOME ]] && { service tomcat status; } && {
-    sudo echo "Tomcat is already installed at $CATALINA_HOME. Skip reinstalling it."
-    exit 0
-}
-
-# Clear install directory
-if [ -d $CATALINA_HOME ]; then
-    sudo rm -rf $CATALINA_HOME
-fi
-sudo mkdir -p $CATALINA_HOME
-
-# Download the latest Tomcat version
-sudo cd /tmp
-{ which wget; } || { yum install wget; }
-sudo wget $TOMCAT_CORE_DOWNLOAD_URL
-if [[ -d /tmp/$TOMCAT_CORE_UNPACKED_DIRNAME ]]; then
-    sudo rm -rf /tmp/$TOMCAT_CORE_UNPACKED_DIRNAME
-fi
-sudo tar xzf $TOMCAT_CORE_TAR_FILENAME
-
-# Copy over to the CATALINA_HOME
-sudo cp -r /tmp/$TOMCAT_CORE_UNPACKED_DIRNAME/* $CATALINA_HOME
-
-# Install Java if not yet installed
-{ which java; } || { yum install java -y; }
-
-# Create the service init.d script
-sudo cat > /etc/init.d/tomcat <<'EOF'
-#!/bin/bash
-# description: Tomcat Start Stop Restart
-# processname: tomcat
-PATH=$JAVA_HOME/bin:$PATH
-export PATH
-CATALINA_HOME='/opt/tomcat'
-
-case $1 in
-start)
-sh $CATALINA_HOME/bin/startup.sh
-;;
-stop)
-sh $CATALINA_HOME/bin/shutdown.sh
-;;
-restart)
-sh $CATALINA_HOME/bin/shutdown.sh
-sh $CATALINA_HOME/bin/startup.sh
-;;
-esac
-exit 0
-EOF
-
-# Change permission mode for the service script
-sudo chmod 755 /etc/init.d/tomcat
+if tom_exists >=1 then 
+echo "tomcat existis"
+else:
+echo "tomcat not exists"
