@@ -1,13 +1,21 @@
 #!/bin/bash
+
+
+#1. search for PID
 script_1="tomcat"
 #2. store in a file - result
 script_1_pid=`sudo ps -eaf | grep -m1 ${script_1}`
-#echo "${script_1_pid}" > /home/ec2-user/pid_1.txt
+echo "${script_1_pid}" > /home/ec2-user/pid_1.txt
 
 #3. wc lines
-tom_exists= wc -l /home/ec2-user/pid_1.txt
+#tom_exists= wc -l $script_1_pid
+
+#/home/ec2-user/pid_1.txt
 
 #echo "${tom_exists}"
+
+
+#sudo wc -l tom_exists > /home/ec2-user/pid_count.txt
 
 sudo wc -l /home/ec2-user/pid_1.txt > /home/ec2-user/pid_count.txt
 
@@ -21,4 +29,3 @@ echo "tomcat existis"
 else
 echo "if statement tomcat not exists"
 fi
-
