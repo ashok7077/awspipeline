@@ -10,7 +10,9 @@ echo "${script_1_pid}" > /home/ec2-user/pid_1.txt
 #3. wc lines
 tom_exists= sudo wc -l /home/ec2-user/pid_1.txt
 
-if tom_exists >=1 then 
+if [tom_exists -eq 1 ]
+then 
 echo "tomcat existis"
-else:
+else
 echo "tomcat not exists"
+fi
